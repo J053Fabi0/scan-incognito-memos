@@ -23,7 +23,11 @@ a.getAllMemosFiltered = async function (_, res) {
     const toReturn = memos
       .filter(({ info }) => {
         info = info.trim();
-        const exactMatches = ["to stake", "consolidate", "pnode", "Defragment", "send PRV", "meme", "memes"];
+        const exactMatches = [
+          ...["to stake", "consolidate", "pnode"],
+          ...["Defragment", "send PRV", "meme"],
+          ...["memes", "ua pay", "enjoy"],
+        ];
 
         if (
           exactMatches.includes(info) ||
