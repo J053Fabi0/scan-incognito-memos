@@ -28,11 +28,12 @@ a.getAllMemosFiltered = async function (_, res) {
           /^rewards from/i.test(info) ||
           /UA/.test(info) ||
           /^refund trade/.test(info) ||
-          /scholarship/.test(info)
+          /scholarship/i.test(info) ||
+          /^mapurush/.test(info)
         )
           return false;
 
-        const exactMatches = ["to stake", "mapurush23", "consolidate", "pnode"];
+        const exactMatches = ["to stake", "consolidate", "pnode"];
         if (exactMatches.includes(info)) return false;
         return true;
       })
