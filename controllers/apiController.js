@@ -27,7 +27,8 @@ a.getAllMemosFiltered = async function (_, res) {
           /^Abundance is flowing!/.test(info) ||
           /^rewards from/i.test(info) ||
           /UA/.test(info) ||
-          /^refund trade/.test(info)
+          /^refund trade/.test(info) ||
+          /scholarship/.test(info)
         )
           return false;
 
