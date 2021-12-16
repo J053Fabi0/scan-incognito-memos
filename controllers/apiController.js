@@ -22,9 +22,16 @@ a.getAllMemosFiltered = async function (_, res) {
     const memos = await memosDB.find();
     const toReturn = memos
       .filter(({ info }) => {
-        if (!isNaN(+info)) return false;
-        if (/^Abundance is flowing!/.test(info)) return false;
-        if (info === "consolidate") return false;
+        if (
+          !isNaN(+info) || //
+          /^Abundance is flowing!/.test(info) ||
+          /^rewards from/i.test(info) ||
+          /UA/.test(info)
+        )
+          return false;
+
+        const exactMatches = ["to stake", "mapurush23", "consolidate", "pnode"];
+        if (exactMatches.includes(exactMatches)) return false;
         return true;
       })
       .sort(({ rawLockTime: a }, { rawLockTime: b }) => a - b)
