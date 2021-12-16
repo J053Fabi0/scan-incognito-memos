@@ -23,6 +23,7 @@ a.getAllMemosFiltered = async function (_, res) {
     const toReturn = memos
       .filter(({ info }) => {
         if (!isNaN(+info)) return false;
+        if (/^Abundance is flowing!/.test(info)) return false;
         if (info === "consolidate") return false;
         return true;
       })
