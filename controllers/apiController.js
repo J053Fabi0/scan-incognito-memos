@@ -34,7 +34,8 @@ a.getAllMemosFiltered = async function (_, res) {
           /membership/.test(info) ||
           /^refund trade/.test(info) ||
           /scholarship/i.test(info) ||
-          /^mapurush/.test(info)
+          /^mapurush/.test(info) ||
+          /^\w{40,}$/.test(info)
         )
           return false;
 
@@ -43,7 +44,6 @@ a.getAllMemosFiltered = async function (_, res) {
       .sort(({ rawLockTime: a }, { rawLockTime: b }) => a - b)
       .map(({ rawLockTime: r, info, _id: txID }) => ({ date: new Date(r).toLocaleString(), info, txID }));
 
-    // Quitar aquellas que no tienen datos de trade y enviar el resto
     return res.send({ message: toReturn });
   } catch (err) {
     return handleError(res, err);
