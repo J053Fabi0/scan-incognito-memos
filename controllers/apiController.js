@@ -31,7 +31,7 @@ a.getAllMemosFiltered = async function (_, res) {
           return false;
 
         const exactMatches = ["to stake", "mapurush23", "consolidate", "pnode"];
-        if (exactMatches.includes(exactMatches)) return false;
+        if (exactMatches.includes(info)) return false;
         return true;
       })
       .sort(({ rawLockTime: a }, { rawLockTime: b }) => a - b)
