@@ -26,7 +26,8 @@ a.getAllMemosFiltered = async function (_, res) {
           !isNaN(+info) || //
           /^Abundance is flowing!/.test(info) ||
           /^rewards from/i.test(info) ||
-          /UA/.test(info)
+          /UA/.test(info) ||
+          /^refund trade/.test(info)
         )
           return false;
 
