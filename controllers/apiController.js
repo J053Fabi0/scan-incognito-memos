@@ -22,8 +22,7 @@ a.getAllMemosFiltered = async function (_, res) {
     const memos = await memosDB.find();
     const toReturn = memos
       .filter(({ info }) => {
-        if (info.length === 4 && !isNaN(+info)) return false;
-        if (info.length === 6 && !isNaN(+info)) return false;
+        if (!isNaN(+info)) return false;
         if (info === "consolidate") return false;
         return true;
       })
