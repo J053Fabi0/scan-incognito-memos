@@ -24,8 +24,8 @@ a.getAllMemosFiltered = async function (_, res) {
       .filter(({ info }) => {
         info = info.trim();
         const exactMatches = [
-          ...["to stake", "consolidate", "pnode", "trade", "rendimento", "freyo", "Congrats on the badges!"],
-          ...["defragment", "send prv", "meme", "test", "loan", "send", "refund", "Move to HD Wallet"],
+          ...["to stake", "consolidate", "pnode", "trade", "rendimento", "freyo", "congrats on the badges!"],
+          ...["defragment", "send prv", "meme", "test", "loan", "send", "refund", "move to hd wallet"],
           ...["memes", "ua pay", "enjoy", "transfer", "send prv home", "yup", "rendimentos"],
         ];
 
