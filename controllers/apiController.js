@@ -26,11 +26,11 @@ a.getAllMemosFiltered = async function (_, res) {
         const exactMatches = [
           ...["to stake", "consolidate", "pnode", "trade"],
           ...["Defragment", "send PRV", "meme", "test", "loan"],
-          ...["memes", "ua pay", "enjoy", "transfer"],
+          ...["memes", "ua pay", "enjoy", "transfer", "send PRV home"],
         ];
 
         if (
-          exactMatches.includes(info) ||
+          exactMatches.includes(info.toLowerCase()) ||
           !isNaN(+info) || //
           /^Abundance is flowing!/.test(info) ||
           /^(rewards|reward) from/i.test(info) ||
