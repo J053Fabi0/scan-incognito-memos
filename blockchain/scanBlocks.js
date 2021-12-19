@@ -97,7 +97,7 @@ async function checkNewBlocks() {
       for (const txid of hashes)
         getInfoOfTx(txid)
           .then(({ info, ...otherData }) => {
-            if (info && info !== "null") returnData.push({ info, ...otherData });
+            if (info && info !== "null" && info !== '""') returnData.push({ info, ...otherData });
           })
           .catch((e) => console.error(e))
           .finally(() => {
