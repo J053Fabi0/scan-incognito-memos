@@ -121,7 +121,6 @@ async function checkNewBlocks() {
     }
 
     const { memo, txID, rawLockTime, ...otherData } = rawTxIDInfo;
-    console.log(new Date(rawLockTime).toLocaleString(), memo);
     // If there is a memo and is not one of this common memos.
     if (memo && memo !== "null" && memo !== '""' && memo !== "Bot") {
       // Only if the memo is unique, add it to database.
@@ -129,7 +128,7 @@ async function checkNewBlocks() {
       const finded = await memosDB.findOne({ memo: new RegExp(`^${escapeRegExp(memo.trim())}$`, "i") });
 
       if (!finded) {
-        console.log("Duplicado.");
+        console.log(new Date(rawLockTime).toLocaleString(), memo);
 
         await memosDB.insert({ _id: txID, memo: memo.trim(), rawLockTime, ...otherData });
       }
