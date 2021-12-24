@@ -24,16 +24,17 @@ a.getAllMemosFiltered = async function (_, res) {
       .filter(({ memo }) => {
         if (
           !isNaN(+memo) || //
-          /^Abundance is flowing!/.test(memo) ||
-          /^(rewards|reward) from/i.test(memo) ||
           /UA/.test(memo) ||
-          /QUEST/.test(memo) ||
           / ua /.test(memo) ||
-          /membership/.test(memo) ||
-          /^refund trade/.test(memo) ||
-          /scholarship/i.test(memo) ||
+          /QUEST/.test(memo) ||
           /^mapurush/.test(memo) ||
-          /^\w{40,}$/.test(memo)
+          /^\w{40,}$/.test(memo) ||
+          /membership/.test(memo) ||
+          /scholarship/i.test(memo) ||
+          /^refund trade/.test(memo) ||
+          /Enjoy Your Perks Gift/.test(memo) ||
+          /^Abundance is flowing!/.test(memo) ||
+          /^(rewards|reward) from/i.test(memo)
         )
           return false;
 
