@@ -7,7 +7,7 @@ a.getAllMemos = async function (_, res) {
   try {
     const memos = await memosDB.find();
     const toReturn = memos
-      .sort(({ rawLockTime: a }, { rawLockTime: b }) => a - b)
+      .sort(({ rawLockTime: a }, { rawLockTime: b }) => b - a)
       .map(({ rawLockTime: r, memo, _id: txID }) => ({ date: r, memo, txID }));
 
     // Quitar aquellas que no tienen datos de trade y enviar el resto
@@ -39,7 +39,7 @@ a.getAllMemosFiltered = async function (_, res) {
 
         return true;
       })
-      .sort(({ rawLockTime: a }, { rawLockTime: b }) => a - b)
+      .sort(({ rawLockTime: a }, { rawLockTime: b }) => b - a)
       .map(({ rawLockTime: r, memo, _id: txID }) => ({ date: r, memo, txID }));
 
     return res.send({ message: toReturn });
