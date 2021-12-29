@@ -86,7 +86,6 @@ async function checkNewBlocks() {
 
     // Increase the block's height in the database.
     await blocksDB.update({ _id: shardID }, { $inc: { height: 1 } });
-    console.log("Updated");
 
     // Fill the array with the promises to request the information of each txID.
     for (const txID of txIDs)
