@@ -3,13 +3,28 @@ require("dotenv").config();
 const scanBlocks = require("./blockchain/scanBlocks");
 scanBlocks.main();
 
-// (async () => {
-//   const blockchainRPCs = require("./blockchain/blockchainRPCs");
-//   const res = await blockchainRPCs.getTransactionByHash(
-//     "63a903b29e1e56408489fa4bb827aac65f9228bd297bcb55eedc655d1ad7c6b3"
-//   );
-//   console.log(res.RawLockTime * 1000);
-// })();
+(async () => {
+  const { memosDB } = require("./functions/initDatabase");
+  const allMemos = await memosDB.find();
+
+  for ({ _id, memo } of allMemos)
+    if (
+      !isNaN(+memo) || //
+      /UA/.test(memo) ||
+      / ua /.test(memo) ||
+      /QUEST/.test(memo) ||
+      /^mapurush/.test(memo) ||
+      /^\w{40,}$/.test(memo) ||
+      /membership/.test(memo) ||
+      /scholarship/i.test(memo) ||
+      /^refund trade/.test(memo) ||
+      /Enjoy Your Perks Gift/.test(memo) ||
+      /^Abundance is flowing!/.test(memo) ||
+      /^(rewards|reward) from/i.test(memo)
+    ) {
+      await memosDB.remove({ _id });
+    }
+})();
 
 const ON_DEATH = require("death");
 let hasAskedToStop = false;
