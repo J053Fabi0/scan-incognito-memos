@@ -18,7 +18,7 @@ a.getMemos = async ({ query }, res) => {
     res.send({
       message: {
         hasNext: endIndex <= lastPosibleIndex,
-        results: allMemos.slice(startIndex, endIndex),
+        results: allMemos.slice(startIndex, endIndex).reverse(),
       },
     });
   } catch (e) {
