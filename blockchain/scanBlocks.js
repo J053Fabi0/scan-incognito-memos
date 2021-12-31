@@ -1,12 +1,28 @@
 const blockchainInfo = require("./blockchainRPCs");
-const sleep = require("util").promisify(setTimeout);
 const escapeRegExp = require("../utils/escapeRegExp");
 const { memosDB, blocksDB } = require("../functions/initDatabase");
 const { iteratePromisesInChunks } = require("../utils/promisesYieldedInChunks");
 
+const sleep = require("util").promisify(setTimeout);
+const sleepChecking = async (ms, checkEach = 1000, fn) => {
+  const timesToCheck = parseInt(ms / checkEach);
+  for (let i = 0; i < timesToCheck; i++) {
+    await sleep(checkEach);
+    fn();
+  }
+
+  await sleep(ms % checkEach);
+  fn();
+};
+
 let counter = 1;
 let stop = false;
 const MAX_SIMULTANEOUS_CONNECTIONS = 8;
+
+function checkIfStop() {
+  if (typeof stop === "function") stop();
+  return typeof stop === "function";
+}
 
 const main = async () => {
   while (true) {
@@ -16,16 +32,13 @@ const main = async () => {
       console.log(err);
     }
     counter++;
-    if (typeof stop !== "boolean") {
-      stop();
-      return;
-    }
+    if (checkIfStop()) return;
   }
 };
 
 module.exports.main = main;
 module.exports.getCounter = () => counter;
-module.exports.stop = () => new Promise((resolve) => (stop = () => resolve()));
+module.exports.stop = () => new Promise((resolve) => (stop = resolve));
 
 async function getLatestBlockHeights() {
   const { BestBlocks } = await blockchainInfo.getBlockchainInfo();
@@ -72,7 +85,7 @@ async function checkNewBlocks() {
   );
   if (numberOfBlocksThatReturnedError === blocksInDB.length) {
     console.log("Retrying getting txIDs in 35 seconds...");
-    await sleep(35_000);
+    await sleepChecking(15_500, 500, checkIfStop);
     return;
   }
 
