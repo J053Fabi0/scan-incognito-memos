@@ -1,3 +1,4 @@
+const { filters } = require("../utils/constants");
 const blockchainInfo = require("./blockchainRPCs");
 const escapeRegExp = require("../utils/escapeRegExp");
 const { memosDB, blocksDB } = require("../functions/initDatabase");
@@ -134,28 +135,9 @@ async function checkNewBlocks() {
     }
 
     const { memo, txID, rawLockTime, ...otherData } = rawTxIDInfo;
-    // If there is a memo and is not one of this common memos.
-    if (
-      memo &&
-      memo !== "null" &&
-      memo !== '""' &&
-      memo !== "Bot" &&
-      !(
-        !isNaN(+memo) || //
-        /UA/.test(memo) ||
-        / ua /.test(memo) ||
-        /QUEST/.test(memo) ||
-        /^mapurush/.test(memo) ||
-        /^\w{40,}$/.test(memo) ||
-        /membership/.test(memo) ||
-        /scholarship/i.test(memo) ||
-        /^refund trade/.test(memo) ||
-        /Enjoy Your Perks Gift/.test(memo) ||
-        /^Abundance is flowing!/.test(memo) ||
-        /^(rewards|reward) from/i.test(memo)
-      )
-    ) {
-      // Only if the memo is unique, add it to database.
+    // If the memo passes the filters.
+    if (filters(memo)) {
+      // Check if the memo is unique, in order to add it to database.
       // It is searched trimmed and using ignore case.
       const finded = await memosDB.findOne({ memo: new RegExp(`^${escapeRegExp(memo.trim())}$`, "i") });
 
