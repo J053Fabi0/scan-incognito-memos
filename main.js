@@ -3,28 +3,15 @@ require("dotenv").config();
 const scanBlocks = require("./blockchain/scanBlocks");
 scanBlocks.main();
 
-// (async () => {
-//   const { memosDB } = require("./functions/initDatabase");
-//   const allMemos = await memosDB.find();
+// Delete every memo that does not passes the filters, in case the test were changed.
+(async () => {
+  const { filters } = require("./utils/constants");
+  const { memosDB } = require("./functions/initDatabase");
 
-//   for ({ _id, memo } of allMemos)
-//     if (
-//       !isNaN(+memo) || //
-//       /UA/.test(memo) ||
-//       / ua /.test(memo) ||
-//       /QUEST/.test(memo) ||
-//       /^mapurush/.test(memo) ||
-//       /^\w{40,}$/.test(memo) ||
-//       /membership/.test(memo) ||
-//       /scholarship/i.test(memo) ||
-//       /^refund trade/.test(memo) ||
-//       /Enjoy Your Perks Gift/.test(memo) ||
-//       /^Abundance is flowing!/.test(memo) ||
-//       /^(rewards|reward) from/i.test(memo)
-//     ) {
-//       await memosDB.remove({ _id });
-//     }
-// })();
+  const allMemos = await memosDB.find();
+
+  for ({ _id, memo } of allMemos) if (!filters(memo)) await memosDB.remove({ _id });
+})();
 
 const ON_DEATH = require("death");
 let hasAskedToStop = false;
