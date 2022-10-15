@@ -8,13 +8,17 @@
     "joi": "^17.5.0",
     "lodash": "^4.17.21",
     "nedb-promises": "^5.0.2",
-    "nodemon": "^2.0.15"
+    "nodemon": "^2.0.15",
+    "pm2": "^5.2.2"
   },
   "name": "scanblocksmemosapi",
   "version": "1.0.0",
   "main": "main.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "stop": "pm2 stop memosapi",
+    "status": "pm2 status memosapi",
+    "create": "pm2 start index.js --name memosapi && pm2 stop memosapi",
+    "start": "pm2 stop memosapi && pm2 start index.js --name memosapi --attach"
   },
   "author": "",
   "license": "ISC",
